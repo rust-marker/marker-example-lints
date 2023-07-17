@@ -1,5 +1,5 @@
 [package]
-name = "lint-crate-template"
+name = "marker_example_lints"
 version = "0.1.0"
 edition = "2021"
 
