@@ -15,5 +15,5 @@ pub fn lints() -> Vec<&'static Lint> {
 }
 
 pub(crate) fn check_expr<'ast>(cx: &'ast AstContext<'ast>, expr: ExprKind<'ast>) {
-    almost_complete_range::check(cx, expr)
+    almost_complete_range::check(cx, expr);
 }

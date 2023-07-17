@@ -41,8 +41,8 @@ pub(crate) fn check<'ast>(cx: &AstContext<'ast>, expr: ExprKind<'ast>) {
             let mut app = Applicability::MachineApplicable;
             let a = start.span().snippet_with_applicability("<start>", &mut app);
             let b = start.span().snippet_with_applicability("<end>", &mut app);
-            diag.span_suggestion("try", expr.span(), format!("{a}..={b}"), app)
-        })
+            diag.span_suggestion("try", expr.span(), format!("{a}..={b}"), app);
+        });
     }
 }
 
@@ -53,24 +53,16 @@ fn is_almost_complete(start: ExprKind<'_>, end: ExprKind<'_>) -> bool {
     ) {
         match (start, end) {
             (LitExprKind::Int(start), LitExprKind::Int(end)) => {
-                if start.value() < u8::MAX.into() || end.value() < u8::MAX.into() {
-                    match (start.value() as u8, end.value() as u8) {
-                        (b'a', b'z') => true,
-                        (b'A', b'Z') => true,
-                        (b'0', b'9') => true,
-                        _ => false,
-                    }
-                } else {
-                    false
-                }
+                matches!(
+                    (u8::try_from(start.value()), u8::try_from(end.value())),
+                    (Ok(b'a'), Ok(b'z')) | (Ok(b'A'), Ok(b'Z')) | (Ok(b'0'), Ok(b'9'))
+                )
             }
             (LitExprKind::Char(start), LitExprKind::Char(end)) => {
-                match (start.value(), end.value()) {
-                    ('a', 'z') => true,
-                    ('A', 'Z') => true,
-                    ('0', '9') => true,
-                    _ => false,
-                }
+                matches!(
+                    (start.value(), end.value()),
+                    ('a', 'z') | ('A', 'Z') | ('0', '9')
+                )
             }
             _ => false,
         }
