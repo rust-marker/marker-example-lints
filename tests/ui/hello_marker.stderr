@@ -1,0 +1,12 @@
+warning: hello, main (From Marker)
+ --> $DIR/hello_marker.rs:5:1
+  |
+5 | / fn main() {
+6 | |     println!("Hello, World!s");
+7 | | }
+  | |_^
+  |
+  = note: `#[warn(marker::my_lint)]` on by default
+
+warning: 1 warning emitted
+

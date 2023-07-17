@@ -1,0 +1,6 @@
+# This file is required for ui-tests. `cargo-marker` can later be called
+# on the stable channel as usual
+
+[toolchain]
+channel = "nightly-2023-07-13"
+components = ["cargo", "clippy", "rustc", "rustc-dev", "rustfmt", "llvm-tools"]

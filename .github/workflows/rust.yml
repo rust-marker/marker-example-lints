@@ -1,0 +1,42 @@
+on:
+  push:
+    # Don't run tests, when only text files were modified
+    paths-ignore:
+    - 'COPYRIGHT'
+    - 'LICENSE-*'
+    - '**.md'
+    - '**.txt'
+  pull_request:
+    # Don't run tests, when only text files were modified
+    paths-ignore:
+    - 'COPYRIGHT'
+    - 'LICENSE-*'
+    - '**.md'
+    - '**.txt'
+
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+  # Make sure rustc errors on warnings in the CI
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+
+    # Setup
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly-2023-07-13
+        components: cargo, clippy, rustfmt, rustc, rustc-dev, llvm-tools
+    - run: rustc -vV
+    - run: cargo install cargo_marker --version 0.1.1
+    - run: cargo marker setup
+
+    # Tests
+    - run: cargo test
+    - run: cargo clippy
+    - run: cargo fmt --check
+    - run: cargo marker
