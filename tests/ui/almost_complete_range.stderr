@@ -1,0 +1,40 @@
+warning: almost complete ascii range
+ --> $DIR/almost_complete_range.rs:8:13
+  |
+8 |     let _ = (b'a'..b'z').contains(&x);
+  |             ^^^^^^^^^^^^ help: try: `b'a'..=b'a'`
+  |
+  = note: `#[warn(marker::almost_complete_range)]` on by default
+
+warning: almost complete ascii range
+ --> $DIR/almost_complete_range.rs:9:13
+  |
+9 |     let _ = (b'A'..b'Z').contains(&x);
+  |             ^^^^^^^^^^^^ help: try: `b'A'..=b'A'`
+
+warning: almost complete ascii range
+  --> $DIR/almost_complete_range.rs:10:13
+   |
+10 |     let _ = (b'0'..b'9').contains(&x);
+   |             ^^^^^^^^^^^^ help: try: `b'0'..=b'0'`
+
+warning: almost complete ascii range
+  --> $DIR/almost_complete_range.rs:11:13
+   |
+11 |     let _ = ('a'..'z').contains(&c);
+   |             ^^^^^^^^^^ help: try: `'a'..='a'`
+
+warning: almost complete ascii range
+  --> $DIR/almost_complete_range.rs:12:13
+   |
+12 |     let _ = ('A'..'Z').contains(&c);
+   |             ^^^^^^^^^^ help: try: `'A'..='A'`
+
+warning: almost complete ascii range
+  --> $DIR/almost_complete_range.rs:13:13
+   |
+13 |     let _ = ('0'..'9').contains(&c);
+   |             ^^^^^^^^^^ help: try: `'0'..='0'`
+
+warning: 6 warnings emitted
+
