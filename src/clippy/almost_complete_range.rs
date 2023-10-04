@@ -1,4 +1,4 @@
-use marker_api::{ast::expr::LitExprKind, diagnostic::Applicability, prelude::*};
+use marker_api::{ast::LitExprKind, diagnostic::Applicability, prelude::*};
 
 marker_api::declare_lint! {
     /// # What it does
@@ -30,14 +30,14 @@ marker_api::declare_lint! {
     Warn,
 }
 
-pub(crate) fn check<'ast>(cx: &AstContext<'ast>, expr: ExprKind<'ast>) {
-    if let ExprKind::Range(range) = expr
+pub(crate) fn check<'ast>(cx: &MarkerContext<'ast>, expr: ast::ExprKind<'ast>) {
+    if let ast::ExprKind::Range(range) = expr
         && !range.is_inclusive()
         && let Some(start) = range.start()
         && let Some(end) = range.end()
         && is_almost_complete(start, end)
     {
-        cx.emit_lint(ALMOST_COMPLETE_RANGE, expr.id(), "almost complete ascii range", expr.span(), |diag| {
+        cx.emit_lint(ALMOST_COMPLETE_RANGE, expr, "almost complete ascii range").decorate( |diag| {
             let mut app = Applicability::MachineApplicable;
             let a = start.span().snippet_with_applicability("<start>", &mut app);
             let b = start.span().snippet_with_applicability("<end>", &mut app);
@@ -46,7 +46,7 @@ pub(crate) fn check<'ast>(cx: &AstContext<'ast>, expr: ExprKind<'ast>) {
     }
 }
 
-fn is_almost_complete(start: ExprKind<'_>, end: ExprKind<'_>) -> bool {
+fn is_almost_complete(start: ast::ExprKind<'_>, end: ast::ExprKind<'_>) -> bool {
     if let (Ok(start), Ok(end)) = (
         TryInto::<LitExprKind>::try_into(start),
         TryInto::<LitExprKind>::try_into(end),

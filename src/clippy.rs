@@ -6,7 +6,7 @@
 //!
 //! [Clippy's lint list]: <https://rust-lang.github.io/rust-clippy/master/index.html>
 
-use marker_api::{lint::Lint, prelude::*};
+use marker_api::prelude::*;
 
 mod almost_complete_range;
 
@@ -14,6 +14,6 @@ pub fn lints() -> Vec<&'static Lint> {
     vec![almost_complete_range::ALMOST_COMPLETE_RANGE]
 }
 
-pub(crate) fn check_expr<'ast>(cx: &'ast AstContext<'ast>, expr: ExprKind<'ast>) {
+pub(crate) fn check_expr<'ast>(cx: &'ast MarkerContext<'ast>, expr: ast::ExprKind<'ast>) {
     almost_complete_range::check(cx, expr);
 }
