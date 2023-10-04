@@ -26,13 +26,13 @@ jobs:
 
     # Setup
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions-rs/toolchain@v1
       with:
         toolchain: nightly-2023-07-13
         components: cargo, clippy, rustfmt, rustc, rustc-dev, llvm-tools
     - run: rustc -vV
-    - run: cargo install cargo_marker --version 0.1.1
+    - run: cargo install cargo_marker --version 0.2.1
     - run: cargo marker setup
 
     # Tests
