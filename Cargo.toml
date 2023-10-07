@@ -9,16 +9,16 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-marker_api = "0.2"
-marker_utils = "0.2"
+marker_api = "0.3"
+marker_utils = "0.3"
 
 [dev-dependencies]
-marker_uitest = "0.2"
+marker_uitest = "0.3"
 
 [[test]]
 name = "uitest"
 harness = false
 
 [workspace.metadata.marker.lints]
-marker_lints = "0.2"
+marker_lints = "0.3"
 marker_example_lints = { path = "." }

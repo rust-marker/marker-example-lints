@@ -1,3 +1,4 @@
+//@no-rustfix
 #[allow(clippy::manual_is_ascii_check)]
 
 fn main() {
