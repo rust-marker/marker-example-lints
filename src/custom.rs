@@ -15,6 +15,6 @@ pub fn check_item<'ast>(cx: &'ast MarkerContext<'ast>, item: ast::ItemKind<'ast>
 /// Currently unused until the crate object is available after:
 /// <https://github.com/rust-marker/marker/issues/279>
 #[allow(dead_code)]
-pub fn check_crate<'ast>(cx: &'ast MarkerContext<'ast>, krate: ast::Crate<'ast>) {
+pub fn check_crate<'ast>(cx: &'ast MarkerContext<'ast>, krate: &ast::Crate<'ast>) {
     combinable_imports::check_crate(cx, krate);
 }

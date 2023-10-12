@@ -30,7 +30,7 @@ pub fn check_item<'ast>(cx: &'ast MarkerContext<'ast>, item: ast::ItemKind<'ast>
     }
 }
 
-pub fn check_crate<'ast>(cx: &'ast MarkerContext<'ast>, krate: ast::Crate<'ast>) {
+pub fn check_crate<'ast>(cx: &'ast MarkerContext<'ast>, krate: &ast::Crate<'ast>) {
     check_items(cx, krate.items());
 }
 
@@ -40,8 +40,7 @@ pub fn check_items<'ast>(cx: &'ast MarkerContext<'ast>, items: &[ast::ItemKind<'
     for item in items {
         // Only select imports
         let import = if let ast::ItemKind::Use(import) = item
-            && let span = import.span()
-            && !span.is_from_expansion()
+            && !import.span().is_from_expansion()
         {
             import
         } else {
@@ -100,6 +99,8 @@ fn count_match(a: &[String], b: &[String]) -> usize {
 
 /// Checks if the two [`AstPathSegment`]s are the same or different.
 fn are_merged(a: &AstPathSegment<'_>, b: &AstPathSegment<'_>) -> bool {
+    // FIXME: These segments should have IDs instead. Comparing the
+    // spans is unnecessary hacky
     let a_span = a.ident().span();
     if let SpanSource::File(file) = a_span.source() {
         let a_start = file.to_file_pos(a_span.start());
